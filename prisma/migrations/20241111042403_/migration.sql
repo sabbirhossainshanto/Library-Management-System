@@ -13,18 +13,6 @@ CREATE TABLE "books" (
 );
 
 -- CreateTable
-CREATE TABLE "authors" (
-    "authorId" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
-    "bio" TEXT NOT NULL,
-    "dateOfBirth" TIMESTAMP(3) NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "authors_pkey" PRIMARY KEY ("authorId")
-);
-
--- CreateTable
 CREATE TABLE "members" (
     "memberId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -38,7 +26,7 @@ CREATE TABLE "members" (
 );
 
 -- CreateTable
-CREATE TABLE "borrowRecords" (
+CREATE TABLE "borrows" (
     "borrowId" TEXT NOT NULL,
     "borrowDate" TIMESTAMP(3) NOT NULL,
     "returnDate" TIMESTAMP(3) NOT NULL,
@@ -47,17 +35,17 @@ CREATE TABLE "borrowRecords" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "borrowRecords_pkey" PRIMARY KEY ("borrowId")
+    CONSTRAINT "borrows_pkey" PRIMARY KEY ("borrowId")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "borrowRecords_bookId_key" ON "borrowRecords"("bookId");
+CREATE UNIQUE INDEX "borrows_bookId_key" ON "borrows"("bookId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "borrowRecords_memberId_key" ON "borrowRecords"("memberId");
+CREATE UNIQUE INDEX "borrows_memberId_key" ON "borrows"("memberId");
 
 -- AddForeignKey
-ALTER TABLE "borrowRecords" ADD CONSTRAINT "borrowRecords_bookId_fkey" FOREIGN KEY ("bookId") REFERENCES "books"("bookId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "borrows" ADD CONSTRAINT "borrows_bookId_fkey" FOREIGN KEY ("bookId") REFERENCES "books"("bookId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "borrowRecords" ADD CONSTRAINT "borrowRecords_memberId_fkey" FOREIGN KEY ("memberId") REFERENCES "members"("memberId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "borrows" ADD CONSTRAINT "borrows_memberId_fkey" FOREIGN KEY ("memberId") REFERENCES "members"("memberId") ON DELETE RESTRICT ON UPDATE CASCADE;
