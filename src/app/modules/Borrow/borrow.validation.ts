@@ -12,7 +12,16 @@ const createBorrowValidationSchema = z.object({
     }),
   }),
 });
+const returnBorrowValidationSchema = z.object({
+  body: z.object({
+    borrowId: z.string({
+      required_error: "borrowId is required",
+      message: "borrowId should be in string",
+    }),
+  }),
+});
 
 export const borrowValidation = {
   createBorrowValidationSchema,
+  returnBorrowValidationSchema,
 };

@@ -12,7 +12,18 @@ const borrowBook = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const returnBook = catchAsync(async (req, res) => {
+  const { borrowId } = req.body;
+  const result = await borrowService.returnBook(borrowId);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Book is returned successfully!",
+    data: result,
+  });
+});
 
 export const borrowController = {
   borrowBook,
+  returnBook,
 };
