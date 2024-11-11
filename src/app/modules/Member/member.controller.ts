@@ -55,7 +55,7 @@ const deleteSingleMember = catchAsync(async (req, res) => {
   });
 });
 
-export const bookController = {
+export const memberController = {
   createMember,
   getAllMember,
   getSingleMember,

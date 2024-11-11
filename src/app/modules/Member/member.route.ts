@@ -1,22 +1,22 @@
 import { Router } from "express";
-import { bookController } from "./book.controller";
 import validateRequest from "../../utils/validateRequest";
-import { bookValidation } from "./book.validation";
+import { memberValidation } from "./member.validation";
+import { memberController } from "./member.controller";
 
 const router = Router();
 
 router.post(
   "/",
-  validateRequest(bookValidation.createBookValidationSchema),
-  bookController.createBook
+  validateRequest(memberValidation.createMemberValidationSchema),
+  memberController.createMember
 );
-router.get("/", bookController.getAllBook);
-router.get("/:bookId", bookController.getSingleBook);
+router.get("/", memberController.getAllMember);
+router.get("/:memberId", memberController.getSingleMember);
 router.put(
-  "/:bookId",
-  validateRequest(bookValidation.updateBookValidationSchema),
-  bookController.updateSingleBook
+  "/:memberId",
+  validateRequest(memberValidation.updateMemberValidationSchema),
+  memberController.updateSingleMember
 );
-router.delete("/:bookId", bookController.deleteSingleBook);
+router.delete("/:memberId", memberController.deleteSingleMember);
 
-export const bookRoutes = router;
+export const memberRoutes = router;
