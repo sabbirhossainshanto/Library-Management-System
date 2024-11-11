@@ -10,5 +10,6 @@ router.post(
   validateRequest(borrowValidation.createBorrowValidationSchema),
   borrowController.borrowBook
 );
+router.get("/overdue", borrowController.getAllOverdueBorrowList);
 
 export const borrowRoutes = router;
