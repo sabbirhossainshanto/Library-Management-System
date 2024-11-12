@@ -28,8 +28,8 @@ CREATE TABLE "members" (
 -- CreateTable
 CREATE TABLE "borrows" (
     "borrowId" TEXT NOT NULL,
-    "borrowDate" TIMESTAMP(3) NOT NULL,
-    "returnDate" TIMESTAMP(3) NOT NULL,
+    "borrowDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "returnDate" TIMESTAMP(3),
     "bookId" TEXT NOT NULL,
     "memberId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -37,12 +37,6 @@ CREATE TABLE "borrows" (
 
     CONSTRAINT "borrows_pkey" PRIMARY KEY ("borrowId")
 );
-
--- CreateIndex
-CREATE UNIQUE INDEX "borrows_bookId_key" ON "borrows"("bookId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "borrows_memberId_key" ON "borrows"("memberId");
 
 -- AddForeignKey
 ALTER TABLE "borrows" ADD CONSTRAINT "borrows_bookId_fkey" FOREIGN KEY ("bookId") REFERENCES "books"("bookId") ON DELETE RESTRICT ON UPDATE CASCADE;

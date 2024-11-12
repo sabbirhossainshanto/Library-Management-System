@@ -1,7 +1,17 @@
-import { Borrow } from "@prisma/client";
 import prisma from "../../../helpers/prisma";
 
-const borrowBook = async (payload: Borrow) => {
+const borrowBook = async (payload: { bookId: string; memberId: string }) => {
+  await prisma.book.findUniqueOrThrow({
+    where: {
+      bookId: payload.bookId,
+    },
+  });
+
+  await prisma.member.findUniqueOrThrow({
+    where: {
+      memberId: payload.memberId,
+    },
+  });
   const result = await prisma.borrow.create({
     data: payload,
   });
@@ -27,6 +37,7 @@ const returnBook = async (borrowId: string) => {
 
 const getAllOverdueBorrowList = async () => {
   const BORROW_DURATION_DAYS = 14;
+  /* create millisecond of 14 days */
   const BORROW_DURATION_MS = BORROW_DURATION_DAYS * 24 * 60 * 60 * 1000;
   const currentDate = new Date();
   const overdueDate = new Date(currentDate.getTime() - BORROW_DURATION_MS);
