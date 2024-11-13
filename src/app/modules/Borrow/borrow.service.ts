@@ -17,6 +17,10 @@ const borrowBook = async (payload: { bookId: string; memberId: string }) => {
   });
   return result;
 };
+const getAllBorrowBook = async () => {
+  const result = await prisma.borrow.findMany();
+  return result;
+};
 const returnBook = async (borrowId: string) => {
   await prisma.borrow.findUniqueOrThrow({
     where: {
@@ -85,4 +89,5 @@ export const borrowService = {
   borrowBook,
   returnBook,
   getAllOverdueBorrowList,
+  getAllBorrowBook,
 };

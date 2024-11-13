@@ -48,11 +48,22 @@ const deleteSingleBookInToDB = async (bookId: string) => {
       bookId,
     },
   });
-  const result = await prisma.book.delete({
-    where: {
-      bookId,
-    },
+
+  const result = await prisma.$transaction(async (tx) => {
+    await tx.borrow.deleteMany({
+      where: {
+        bookId,
+      },
+    });
+    const deletedBook = await tx.book.delete({
+      where: {
+        bookId,
+      },
+    });
+
+    return deletedBook;
   });
+
   return result;
 };
 

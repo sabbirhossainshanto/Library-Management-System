@@ -26,6 +26,15 @@ const borrowBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         data: result,
     });
 }));
+const getAllBorrowBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield borrow_service_1.borrowService.getAllBorrowBook();
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Borrow book retrieved successfully!",
+        data: result,
+    });
+}));
 const returnBook = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { borrowId } = req.body;
     const result = yield borrow_service_1.borrowService.returnBook(borrowId);
@@ -49,4 +58,5 @@ exports.borrowController = {
     borrowBook,
     returnBook,
     getAllOverdueBorrowList,
+    getAllBorrowBook,
 };

@@ -15,9 +15,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.borrowService = void 0;
 const prisma_1 = __importDefault(require("../../../helpers/prisma"));
 const borrowBook = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    yield prisma_1.default.book.findUniqueOrThrow({
+        where: {
+            bookId: payload.bookId,
+        },
+    });
+    yield prisma_1.default.member.findUniqueOrThrow({
+        where: {
+            memberId: payload.memberId,
+        },
+    });
     const result = yield prisma_1.default.borrow.create({
         data: payload,
     });
+    return result;
+});
+const getAllBorrowBook = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield prisma_1.default.borrow.findMany();
     return result;
 });
 const returnBook = (borrowId) => __awaiter(void 0, void 0, void 0, function* () {
@@ -38,6 +52,7 @@ const returnBook = (borrowId) => __awaiter(void 0, void 0, void 0, function* () 
 });
 const getAllOverdueBorrowList = () => __awaiter(void 0, void 0, void 0, function* () {
     const BORROW_DURATION_DAYS = 14;
+    /* create millisecond of 14 days */
     const BORROW_DURATION_MS = BORROW_DURATION_DAYS * 24 * 60 * 60 * 1000;
     const currentDate = new Date();
     const overdueDate = new Date(currentDate.getTime() - BORROW_DURATION_MS);
@@ -78,4 +93,5 @@ exports.borrowService = {
     borrowBook,
     returnBook,
     getAllOverdueBorrowList,
+    getAllBorrowBook,
 };
